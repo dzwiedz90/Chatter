@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MainWindow {
+public class MainWindow extends JFrame implements ActionListener {
     protected JFrame mainWindow;
     protected JTextArea displayForMessages;
     protected JTextField sendMessageField;
@@ -33,8 +35,9 @@ public class MainWindow {
         JPanel displayPane = new JPanel();
         displayForMessages = new JTextArea(10, 45);
         displayForMessages.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(displayForMessages, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        displayPane.add(displayForMessages);
+        displayPane.add(scrollPane);
         mainWindow.add(displayPane, BorderLayout.NORTH);
     }
 
@@ -42,8 +45,17 @@ public class MainWindow {
         JPanel sendMessagePanel = new JPanel();
         sendMessageField = new JTextField(38);
         sendMessageButton = new JButton("Send");
+        sendMessageButton.addActionListener(this);
         sendMessagePanel.add(sendMessageField);
         sendMessagePanel.add(sendMessageButton);
         mainWindow.add(sendMessagePanel, BorderLayout.SOUTH);
+    }
+
+    public void actionPerformed(ActionEvent event){
+        Object source = event.getSource();
+
+        if (source == sendMessageButton){
+            displayForMessages.append(sendMessageField.getText() + "\n");
+        }
     }
 }
