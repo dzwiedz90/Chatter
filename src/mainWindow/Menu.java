@@ -1,3 +1,5 @@
+package mainWindow;
+
 import configuration.EditConfiguration;
 
 import javax.swing.*;

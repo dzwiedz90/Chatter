@@ -1,3 +1,5 @@
+package mainWindow;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -51,10 +53,11 @@ public class MainWindow extends JFrame implements ActionListener {
         mainWindow.add(sendMessagePanel, BorderLayout.SOUTH);
     }
 
-    public void actionPerformed(ActionEvent event){
+    public void actionPerformed(ActionEvent event) {
         Object source = event.getSource();
 
-        if (source == sendMessageButton){
+        if (source == sendMessageButton) {
+//            displayForMessages.append(this.name + ": " + sendMessageField.getText() + "\n");
             displayForMessages.append(sendMessageField.getText() + "\n");
         }
     }
