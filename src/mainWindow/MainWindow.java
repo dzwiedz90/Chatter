@@ -1,5 +1,9 @@
 package mainWindow;
 
+import configuration.ReadConfiguration;
+import messages.ReceiveMessage;
+import messages.SendMessage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +14,8 @@ public class MainWindow extends JFrame implements ActionListener {
     protected JTextArea displayForMessages;
     protected JTextField sendMessageField;
     protected JButton sendMessageButton;
+    String name;
+    String host;
 
     public MainWindow() {
         super();
@@ -19,10 +25,13 @@ public class MainWindow extends JFrame implements ActionListener {
         BorderLayout layout = new BorderLayout();
         mainWindow.setLayout(layout);
 
-        Menu menuBar = new Menu();
+        Menu menuBar = new Menu(this);
         mainWindow.setJMenuBar(Menu.menuBar);
         addDisplayForMessages();
         addSendMessageField();
+        readFromConfiguration();
+        ReceiveMessage receiver = new ReceiveMessage();
+        receiver.start();
 
         mainWindow.setVisible(true);
         centerWindowOnScreen();
@@ -57,8 +66,16 @@ public class MainWindow extends JFrame implements ActionListener {
         Object source = event.getSource();
 
         if (source == sendMessageButton) {
-//            displayForMessages.append(this.name + ": " + sendMessageField.getText() + "\n");
-            displayForMessages.append(sendMessageField.getText() + "\n");
+            displayForMessages.append(this.name + ": " + sendMessageField.getText() + "\n");
+            sendMessageField.setText("");
+            sendMessageField.requestFocus();
+            SendMessage sendMessage = new SendMessage(sendMessageField.getText(), this.name, this.host);
         }
+    }
+
+    public void readFromConfiguration() {
+        ReadConfiguration configuration = new ReadConfiguration();
+        this.name = configuration.getName();
+        this.host = configuration.getHost();
     }
 }

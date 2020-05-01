@@ -10,8 +10,10 @@ public class Menu extends JFrame implements ActionListener {
     static JMenuBar menuBar;
     JMenuItem conf;
     JMenuItem exit;
+    MainWindow mainWindow;
 
-    public Menu() {
+    public Menu(MainWindow mainWindowIn) {
+        this.mainWindow = mainWindowIn;
         JMenuItem file = new JMenuItem("File");
         conf = new JMenuItem("Configuration");
         conf.addActionListener(this);
@@ -38,7 +40,7 @@ public class Menu extends JFrame implements ActionListener {
         Object source = event.getSource();
 
         if(source == conf){
-            EditConfiguration editConfiguration = new EditConfiguration();
+            EditConfiguration editConfiguration = new EditConfiguration(this.mainWindow);
         }
         if(source == exit){
             System.exit(0);

@@ -1,5 +1,7 @@
 package configuration;
 
+import mainWindow.MainWindow;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,8 +17,10 @@ public class EditConfiguration extends JFrame implements ActionListener {
     String name;
     String host;
     JButton saveConfigurationButton;
+    MainWindow mainWindow;
 
-    public EditConfiguration() {
+    public EditConfiguration(MainWindow mainWindowIn) {
+        this.mainWindow = mainWindowIn;
         configurationFrame = new JFrame("Edit configuration");
         configurationFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         configurationFrame.setSize(300, 200);
@@ -85,6 +89,7 @@ public class EditConfiguration extends JFrame implements ActionListener {
 
             out.close();
             configurationFrame.dispose();
+            mainWindow.readFromConfiguration();
         } catch (IOException e) {
             System.out.println(e);
         }
