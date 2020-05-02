@@ -30,7 +30,7 @@ public class MainWindow extends JFrame implements ActionListener {
         addDisplayForMessages();
         addSendMessageField();
         readFromConfiguration();
-        ReceiveMessage receiver = new ReceiveMessage();
+        ReceiveMessage receiver = new ReceiveMessage(this);
         receiver.start();
 
         mainWindow.setVisible(true);
@@ -67,9 +67,10 @@ public class MainWindow extends JFrame implements ActionListener {
 
         if (source == sendMessageButton) {
             displayForMessages.append(this.name + ": " + sendMessageField.getText() + "\n");
+            String toSend = sendMessageField.getText();
             sendMessageField.setText("");
             sendMessageField.requestFocus();
-            SendMessage sendMessage = new SendMessage(sendMessageField.getText(), this.name, this.host);
+            SendMessage sendMessage = new SendMessage(toSend, this.name, this.host);
         }
     }
 
@@ -77,5 +78,9 @@ public class MainWindow extends JFrame implements ActionListener {
         ReadConfiguration configuration = new ReadConfiguration();
         this.name = configuration.getName();
         this.host = configuration.getHost();
+    }
+
+    public void displayReceivedMessage(String name, String message) {
+        displayForMessages.append(name + ": " + message + "\n");
     }
 }

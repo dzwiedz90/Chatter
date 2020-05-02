@@ -23,9 +23,8 @@ public class SendMessage {
             Socket socket = new Socket(this.host, 7777);
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
             PrintWriter outToSocket = new PrintWriter(bufferedOutputStream, false);
-
-            outToSocket.println(name);
-            outToSocket.println(message);
+            outToSocket.println(this.name);
+            outToSocket.println(this.message);
             outToSocket.flush();
             outToSocket.close();
             socket.close();
