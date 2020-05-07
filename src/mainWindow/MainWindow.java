@@ -8,8 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class MainWindow extends JFrame implements ActionListener {
+public class MainWindow extends JFrame implements ActionListener, KeyListener {
     protected JFrame mainWindow;
     protected JTextArea displayForMessages;
     protected JTextField sendMessageField;
@@ -55,6 +57,7 @@ public class MainWindow extends JFrame implements ActionListener {
     private void addSendMessageField() {
         JPanel sendMessagePanel = new JPanel();
         sendMessageField = new JTextField(38);
+        sendMessageField.addKeyListener(this);
         sendMessageButton = new JButton("Send");
         sendMessageButton.addActionListener(this);
         sendMessagePanel.add(sendMessageField);
@@ -66,11 +69,7 @@ public class MainWindow extends JFrame implements ActionListener {
         Object source = event.getSource();
 
         if (source == sendMessageButton) {
-            displayForMessages.append(this.name + ": " + sendMessageField.getText() + "\n");
-            String toSend = sendMessageField.getText();
-            sendMessageField.setText("");
-            sendMessageField.requestFocus();
-            SendMessage sendMessage = new SendMessage(toSend, this.name, this.host);
+            sendMessage();
         }
     }
 
@@ -82,5 +81,28 @@ public class MainWindow extends JFrame implements ActionListener {
 
     public void displayReceivedMessage(String name, String message) {
         displayForMessages.append(name + ": " + message + "\n");
+    }
+
+    public void keyPressed(KeyEvent event) {
+        Object source = event.getKeyCode();
+        if (source.equals(10)) {
+            sendMessage();
+        }
+    }
+
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    private void sendMessage() {
+        displayForMessages.append(this.name + ": " + sendMessageField.getText() + "\n");
+        String toSend = sendMessageField.getText();
+        sendMessageField.setText("");
+        sendMessageField.requestFocus();
+        SendMessage sendMessage = new SendMessage(toSend, this.name, this.host);
     }
 }
