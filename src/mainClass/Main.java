@@ -1,3 +1,5 @@
+package mainClass;
+
 import mainWindow.MainWindow;
 
 public class Main {
